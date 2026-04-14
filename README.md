@@ -34,3 +34,72 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+devhub/
+│
+├── app/
+│ ├── (auth)/
+│ │ ├── sign-in/
+│ │ ├── sign-up/
+│ │
+│ ├── (dashboard)/
+│ │ ├── layout.tsx
+│ │ ├── page.tsx // Feed page
+│ │ ├── profile/
+│ │ │ └── page.tsx
+│ │ ├── bookmarks/
+│ │ │ └── page.tsx
+│ │ ├── explore/
+│ │ │ └── page.tsx
+│ │
+│ ├── api/ // (only if using API routes)
+│ │ ├── posts/
+│ │ ├── likes/
+│ │
+│ ├── layout.tsx // Root layout
+│ └── page.tsx // Landing page
+│
+├── components/
+│ ├── ui/ // shadcn components
+│ ├── shared/
+│ │ ├── navbar.tsx
+│ │ ├── sidebar.tsx
+│ │
+│ ├── post/
+│ │ ├── post-card.tsx
+│ │ ├── post-form.tsx
+│ │ ├── post-actions.tsx
+│ │
+│ ├── profile/
+│ │ ├── profile-header.tsx
+│ │ ├── profile-form.tsx
+│
+├── lib/
+│ ├── db.ts // Prisma client
+│ ├── auth.ts // Auth helpers
+│ ├── utils.ts // Common helpers
+│
+├── actions/ // Server Actions
+│ ├── post-actions.ts
+│ ├── user-actions.ts
+│ ├── like-actions.ts
+│
+├── hooks/
+│ ├── use-user.ts
+│ ├── use-posts.ts
+│
+├── store/ // Zustand / state
+│ ├── use-app-store.ts
+│
+├── prisma/
+│ └── schema.prisma
+│
+├── types/
+│ ├── index.ts
+│
+├── public/
+│
+├── styles/
+│ └── globals.css
+│
+└── middleware.ts

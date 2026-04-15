@@ -14,6 +14,7 @@ import {
 import { Textarea } from "../ui/textarea";
 import { createPostAction } from "@/actions/post-actions";
 import FormContainer from "../form/FormContainer";
+import { Input } from "../ui/input";
 
 const CreatePostDialog = () => {
   return (
@@ -30,6 +31,13 @@ const CreatePostDialog = () => {
             <DialogTitle>Create Post</DialogTitle>
             <DialogDescription>Write Something</DialogDescription>
           </DialogHeader>
+
+          <Input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="add post title (optional)"
+          />
 
           <Textarea
             id="postContent"

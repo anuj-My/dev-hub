@@ -17,7 +17,8 @@ export const createPostAction = async (formData: FormData) => {
       throw new Error("Post content is required");
     }
 
-    const user = await getAuthUser();
+    const user = await currentUser();
+    if (!user) throw new Error("Unauthorized");
 
     await db.post.create({
       data: {
@@ -34,7 +35,7 @@ export const createPostAction = async (formData: FormData) => {
 
 export const fetchAllPostAction = async () => {
   try {
-    const user = await getAuthUser();
+    await getAuthUser();
 
     const post = await db.post.findMany({
       orderBy: {

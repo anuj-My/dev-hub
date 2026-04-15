@@ -15,12 +15,13 @@ import { Textarea } from "../ui/textarea";
 import { createPostAction } from "@/actions/post-actions";
 import FormContainer from "../form/FormContainer";
 import { Input } from "../ui/input";
+import { RiFileImageLine } from "@remixicon/react";
 
 const CreatePostDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="border p-4 rounded-full cursor-text hover:bg-muted/50">
+        <div className="border p-4 mb-6 rounded-full cursor-text hover:bg-muted/50">
           <p className="text-muted-foreground">What are you building today?</p>
         </div>
       </DialogTrigger>
@@ -46,6 +47,19 @@ const CreatePostDialog = () => {
             required
             className="min-h-[150px] resize-none"
           />
+
+          <div className="flex items-center gap-3">
+            <label className="display flex items-center gap-2 cursor-pointer p-2 rounded-full text-muted-foreground hover:bg-muted transition">
+              <RiFileImageLine className="w-5 h-5 text-muted-foreground" />
+              <input
+                type="file"
+                name="imageUrl"
+                accept="image/*"
+                className="hidden"
+              />
+              Add Image
+            </label>
+          </div>
 
           <DialogFooter>
             <DialogClose asChild>

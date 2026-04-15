@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Container from "../global/Container";
 import AuthButtons from "../shared/auth-buttons";
+import { Show } from "@clerk/nextjs";
+import UserIconDropdown from "./UserIconDropdown";
 
-const Navbar = () => {
+const Navbar = async () => {
   return (
     <div className="fixed top-0 left-0 w-full z-100 border-b bg-background/70 backdrop-blur">
       <Container>
@@ -11,7 +13,13 @@ const Navbar = () => {
             Dev<span className="text-primary">Hub</span>
           </Link>
 
-          <AuthButtons />
+          <Show when="signed-in">
+            <UserIconDropdown />
+          </Show>
+
+          <Show when="signed-out">
+            <AuthButtons />
+          </Show>
         </nav>
       </Container>
     </div>

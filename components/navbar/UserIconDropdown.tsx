@@ -23,9 +23,9 @@ export default async function UserIconDropdown() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-muted transition"
+          className="flex items-center gap-3 px-2 py-4 rounded-full hover:bg-muted transition"
         >
-          <Avatar className="h-9 w-9 border border-muted">
+          <Avatar className="h-6 w-6 border border-muted">
             <AvatarImage
               src={user?.imageUrl}
               alt={user?.firstName || "user image"}
@@ -35,10 +35,9 @@ export default async function UserIconDropdown() {
             </AvatarFallback>
           </Avatar>
 
-          <div className="flex flex-col items-start leading-tight">
-            <span className="text-xs text-muted-foreground">Welcome</span>
-            <span className="text-sm font-medium capitalize">
-              {user?.firstName}
+          <div className="flex items-center leading-tight capitalize">
+            <span className=" text-muted-foreground">
+              hi, {user?.firstName}
             </span>
           </div>
         </Button>

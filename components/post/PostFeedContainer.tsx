@@ -12,7 +12,16 @@ const PostFeedContainer = async () => {
   return (
     <div className="space-y-6">
       {posts?.map((post) => {
-        return <PostContentCard key={post.id} postContent={post.postContent} />;
+        const { title, imageUrl, postContent, authorName, authorImage } = post;
+        const postInfo = {
+          title,
+          imageUrl,
+          postContent,
+          authorImage,
+          authorName,
+        };
+
+        return <PostContentCard key={post.id} postInfo={postInfo} />;
       })}
     </div>
   );

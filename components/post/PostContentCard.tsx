@@ -15,31 +15,35 @@ import {
   RiHeartLine,
 } from "@remixicon/react";
 
-// type PostPropsType = {
+type PostPropsType = {
+  title?: string;
+  postContent: string;
+  imageUrl?: string;
+  authorImage?: string;
+  authorName?: string;
+};
 
-// };
-
-const PostContentCard = ({ postContent }: { postContent: string }) => {
-  console.log(postContent);
+const PostContentCard = ({ postInfo }: { postInfo: PostPropsType }) => {
+  const isLiked = false;
+  const { title, imageUrl, postContent, authorName, authorImage } = postInfo;
   return (
     <Card className="w-full">
       <CardHeader className="space-y-6">
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage
-              src="https://github.com/shadcn.png"
-              alt="@shadcn"
-              className="grayscale"
+              src={authorImage || "https://github.com/shadcn.png"}
+              alt={authorName || "author"}
             />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback> {authorName?.charAt(0)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col leading-tight capitalize">
-            <span className="font-medium">posted by</span>
+            <span className="font-medium">{authorName}</span>
             <span className="tex-xs text-muted-foreground">posted on</span>
           </div>
         </div>
 
-        <CardTitle>post title</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>{postContent}</CardContent>
       <CardFooter className="justify-between">
@@ -49,8 +53,7 @@ const PostContentCard = ({ postContent }: { postContent: string }) => {
             size="icon"
             className="w-8 h-8 rounded-full"
           >
-            <RiHeartLine />
-            <RiHeartFill />
+            {isLiked ? <RiHeartFill /> : <RiHeartLine />}
           </Button>
           <Button
             variant="outline"

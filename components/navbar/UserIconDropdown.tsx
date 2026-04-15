@@ -45,9 +45,9 @@ export default async function UserIconDropdown() {
       <DropdownMenuContent className="z-101">
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link href="/profile" className="flex items-center gap-2">
+            <Link href="/dashboard" className="flex items-center gap-2">
               <RiUserLine />
-              Profile
+              Dashboard
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

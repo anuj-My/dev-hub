@@ -1,8 +1,11 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -21,10 +24,11 @@ const CreatePostDialog = () => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="z-101 sm:max-w-2xl">
         <FormContainer action={createPostAction} className="space-y-4">
           <DialogHeader>
             <DialogTitle>Create Post</DialogTitle>
+            <DialogDescription>Write Something</DialogDescription>
           </DialogHeader>
 
           <Textarea

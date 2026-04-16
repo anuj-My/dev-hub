@@ -51,20 +51,24 @@ const PostContentCard = ({ post }: { post: Post }) => {
         <div className="flex gap-2 items-center">
           <Button
             variant="outline"
-            size="icon"
+            size="icon-lg"
             className="w-8 h-8 rounded-full"
           >
             {isLiked ? <RiHeartFill /> : <RiHeartLine />}
           </Button>
           <Button
             variant="outline"
-            size="icon"
+            size="icon-lg"
             className="w-8 h-8 rounded-full"
           >
             <RiChat1Line />
           </Button>
         </div>
-        <Button variant="outline" size="icon" className="w-8 h-8 rounded-full">
+        <Button
+          variant="outline"
+          size="icon-lg"
+          className="w-8 h-8 rounded-full"
+        >
           <RiBookmarkLine />
         </Button>
       </CardFooter>

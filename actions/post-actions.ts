@@ -1,6 +1,6 @@
 "use server";
-import { currentUser, User } from "@clerk/nextjs/server";
 import db from "../lib/prisma";
+import { currentUser, User } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { FormState } from "@/components/form/FormContainer";
@@ -25,6 +25,13 @@ const syncUser = async (user: User) => {
   });
 };
 
+const renderError = (error: unknown): FormState => {
+  return {
+    message: error instanceof Error ? error.message : "Something weng wrong",
+    success: false,
+  };
+};
+
 export const createPostAction = async (
   prevState: FormState,
   formData: FormData,
@@ -35,11 +42,19 @@ export const createPostAction = async (
     const title = formData.get("title") as string;
 
     if (!postContent || postContent.trim() === "") {
-      throw new Error("Post content is required");
+      return {
+        message: "Post content is required",
+        success: false,
+      };
     }
 
     const user = await currentUser();
-    if (!user) throw new Error("Unauthorized");
+    if (!user) {
+      return {
+        message: "Unauthorized",
+        success: false,
+      };
+    }
 
     await syncUser(user);
 
@@ -58,7 +73,7 @@ export const createPostAction = async (
 
     return { message: "Post created successfully.", success: true };
   } catch (error) {
-    return { message: "Something went wrong", success: false };
+    return renderError(error);
   }
 };
 
@@ -73,6 +88,6 @@ export const fetchAllPostAction = async () => {
     });
     return post;
   } catch (error) {
-    console.log(error);
+    renderError(error);
   }
 };

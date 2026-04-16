@@ -1,11 +1,11 @@
 import CreatePostDialog from "@/components/post/CreatePostDialog";
-import PostFeedContainer from "@/components/post/PostFeedContainer";
+import PostFeed from "@/components/post/PostFeed";
 
 const DashboardPage = async () => {
   return (
     <>
       <CreatePostDialog />
-      <PostFeedContainer />
+      <PostFeed />
     </>
   );
 };

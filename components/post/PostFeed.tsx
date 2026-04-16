@@ -1,8 +1,9 @@
 import { fetchAllPostAction } from "@/actions/post-actions";
 import PostContentCard from "@/components/post/PostContentCard";
 import SectionTitle from "../shared/SectionTitle";
+import FeedWrapper from "./PostFeedWrapper";
 
-const PostFeedContainer = async () => {
+const PostFeed = async () => {
   const posts = await fetchAllPostAction();
 
   if (posts?.length === 0) {
@@ -10,21 +11,12 @@ const PostFeedContainer = async () => {
   }
 
   return (
-    <div className="space-y-6">
+    <FeedWrapper>
       {posts?.map((post) => {
-        // const { title, imageUrl, postContent, authorName, authorImage } = post;
-        // const postInfo = {
-        //   title,
-        //   imageUrl,
-        //   postContent,
-        //   authorImage,
-        //   authorName,
-        // };
-
         return <PostContentCard key={post.id} post={post} />;
       })}
-    </div>
+    </FeedWrapper>
   );
 };
 
-export default PostFeedContainer;
+export default PostFeed;

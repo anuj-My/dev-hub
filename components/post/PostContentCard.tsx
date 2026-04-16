@@ -14,6 +14,7 @@ import {
   RiHeartFill,
   RiHeartLine,
 } from "@remixicon/react";
+import { Post } from "@/lib/generated/prisma/client";
 
 type PostPropsType = {
   title?: string;
@@ -23,9 +24,9 @@ type PostPropsType = {
   authorName?: string;
 };
 
-const PostContentCard = ({ postInfo }: { postInfo: PostPropsType }) => {
+const PostContentCard = ({ post }: { post: Post }) => {
   const isLiked = false;
-  const { title, imageUrl, postContent, authorName, authorImage } = postInfo;
+  const { title, imageUrl, postContent, authorName, authorImage } = post;
   return (
     <Card className="w-full">
       <CardHeader className="space-y-6">
@@ -43,9 +44,9 @@ const PostContentCard = ({ postInfo }: { postInfo: PostPropsType }) => {
           </div>
         </div>
 
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-xl">{title}</CardTitle>
       </CardHeader>
-      <CardContent>{postContent}</CardContent>
+      <CardContent className="text-lg">{postContent}</CardContent>
       <CardFooter className="justify-between">
         <div className="flex gap-2 items-center">
           <Button

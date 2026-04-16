@@ -16,18 +16,26 @@ import { createPostAction } from "@/actions/post-actions";
 import FormContainer from "../form/FormContainer";
 import { Input } from "../ui/input";
 import { RiFileImageLine } from "@remixicon/react";
+import { useState } from "react";
+import SubmitButton from "../form/SubmitButton";
 
 const CreatePostDialog = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="border p-4 mb-6 rounded-full cursor-text hover:bg-muted/50">
           <p className="text-muted-foreground">What are you building today?</p>
         </div>
       </DialogTrigger>
 
-      <DialogContent className="z-101 sm:max-w-2xl">
-        <FormContainer action={createPostAction} className="space-y-4">
+      <DialogContent className="z-101 sm:max-w-2xl" showCloseButton={false}>
+        <FormContainer
+          action={createPostAction}
+          onSuccess={() => setOpen(false)}
+          className="space-y-4"
+        >
           <DialogHeader>
             <DialogTitle>Create Post</DialogTitle>
             <DialogDescription>Write Something</DialogDescription>
@@ -45,11 +53,11 @@ const CreatePostDialog = () => {
             name="postContent"
             placeholder="Share your idea, code, or progress..."
             required
-            className="min-h-[150px] resize-none"
+            className="min-h-[150px] resize-none no-scrollbar max-h-[200px] overflow-y-auto px-4"
           />
 
           <div className="flex items-center gap-3">
-            <label className="display flex items-center gap-2 cursor-pointer p-2 rounded-full text-muted-foreground hover:bg-muted transition">
+            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-full text-muted-foreground hover:bg-muted transition">
               <RiFileImageLine className="w-5 h-5 text-muted-foreground" />
               <input
                 type="file"
@@ -68,9 +76,7 @@ const CreatePostDialog = () => {
               </Button>
             </DialogClose>
 
-            <Button type="submit" size="lg">
-              Post
-            </Button>
+            <SubmitButton text="Post" />
           </DialogFooter>
         </FormContainer>
       </DialogContent>

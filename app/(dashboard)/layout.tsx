@@ -8,7 +8,7 @@ const DashbaordLayout = ({ children }: { children: React.ReactNode }) => {
     <SidebarProvider>
       <Navbar />
       <AppSidebar />
-      <main className="py-20">
+      <main>
         <SidebarTrigger />
         <Container className="py-20">{children}</Container>
       </main>

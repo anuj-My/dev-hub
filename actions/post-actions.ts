@@ -3,6 +3,7 @@ import { currentUser, User } from "@clerk/nextjs/server";
 import db from "../lib/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { FormState } from "@/components/form/FormContainer";
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -24,7 +25,10 @@ const syncUser = async (user: User) => {
   });
 };
 
-export const createPostAction = async (formData: FormData) => {
+export const createPostAction = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
   try {
     const postContent = formData.get("postContent") as string;
     const imageUrl = formData.get("imageUrl") as string;
@@ -52,9 +56,9 @@ export const createPostAction = async (formData: FormData) => {
 
     revalidatePath("/dashboard");
 
-    console.log("post created", postContent);
+    return { message: "Post created successfully.", success: true };
   } catch (error) {
-    console.log(error);
+    return { message: "Something went wrong", success: false };
   }
 };
 

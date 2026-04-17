@@ -8,13 +8,8 @@ import {
 } from "@/components/ui/card";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  RiBookmarkLine,
-  RiChat1Line,
-  RiHeartFill,
-  RiHeartLine,
-} from "@remixicon/react";
 import { Post } from "@/lib/generated/prisma/client";
+import PostActions from "../comment/PostActions";
 
 type PostPropsType = {
   title?: string;
@@ -47,30 +42,8 @@ const PostContentCard = ({ post }: { post: Post }) => {
         <CardTitle className="text-xl">{title}</CardTitle>
       </CardHeader>
       <CardContent className="text-lg">{postContent}</CardContent>
-      <CardFooter className="justify-between">
-        <div className="flex gap-2 items-center">
-          <Button
-            variant="outline"
-            size="icon-lg"
-            className="w-8 h-8 rounded-full"
-          >
-            {isLiked ? <RiHeartFill /> : <RiHeartLine />}
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-lg"
-            className="w-8 h-8 rounded-full"
-          >
-            <RiChat1Line />
-          </Button>
-        </div>
-        <Button
-          variant="outline"
-          size="icon-lg"
-          className="w-8 h-8 rounded-full"
-        >
-          <RiBookmarkLine />
-        </Button>
+      <CardFooter className="flex-col w-full gap-4">
+        <PostActions />
       </CardFooter>
     </Card>
   );

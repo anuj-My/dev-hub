@@ -7,7 +7,7 @@ import { FormState } from "@/components/form/FormContainer";
 
 const getAuthUser = async () => {
   const user = await currentUser();
-  if (!user) redirect("/");
+  if (!user) redirect("/sign-in");
   return user;
 };
 
@@ -51,7 +51,7 @@ export const createPostAction = async (
     const user = await currentUser();
     if (!user) {
       return {
-        message: "Unauthorized",
+        message: "You are not logged in",
         success: false,
       };
     }
@@ -88,6 +88,61 @@ export const fetchAllPostAction = async () => {
     });
     return post;
   } catch (error) {
-    renderError(error);
+    return [];
+  }
+};
+
+export const createCommentAction = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
+  try {
+    const comment = formData.get("comment") as string;
+    const postId = formData.get("postId") as string;
+
+    if (!comment || comment.trim() === "") {
+      return {
+        message: "Comment cannot be empty",
+        success: false,
+      };
+    }
+
+    const user = await getAuthUser();
+
+    await syncUser(user);
+
+    const post = await db.comment.create({
+      data: {
+        comment,
+        userId: user.id,
+        postId,
+      },
+    });
+
+    revalidatePath("/dashboard");
+
+    return { message: "Comment added successfully", success: true };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const fetchCommentsAction = async (postId: string) => {
+  try {
+    const comments = await db.comment.findMany({
+      where: {
+        postId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    return comments;
+  } catch (error) {
+    return [];
   }
 };

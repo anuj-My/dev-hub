@@ -8,9 +8,9 @@ import {
 } from "@remixicon/react";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import CommentContainer from "./CommentContainer";
+import CommentContainer from "../comment/CommentContainer";
 
-const PostActions = () => {
+const PostActions = ({ postId }: { postId: string }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
   return (
@@ -43,7 +43,7 @@ const PostActions = () => {
         </Button>
       </div>
 
-      {showComments && <CommentContainer />}
+      {showComments && <CommentContainer postId={postId} />}
     </>
   );
 };

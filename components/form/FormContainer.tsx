@@ -1,6 +1,5 @@
 "use client";
 
-import { Form } from "radix-ui";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -27,7 +26,7 @@ const FormContainer = ({
   action: FormActionType;
   className: string;
   children: React.ReactNode;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 }) => {
   const [state, formAction] = useActionState(action, initialState);
 
@@ -36,7 +35,7 @@ const FormContainer = ({
       toast(state.message);
     }
 
-    if (state.success) {
+    if ((state.success, onSuccess)) {
       onSuccess();
     }
   }, [state]);

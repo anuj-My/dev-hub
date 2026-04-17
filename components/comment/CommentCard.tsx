@@ -1,25 +1,32 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-// import { Comment } from "@/lib/generated/prisma/client";
+import { Prisma } from "@/lib/generated/prisma/client";
 import { RiChat1Line, RiHeartLine } from "@remixicon/react";
-// { comment }: { comment: Comment }
-const CommentCard = () => {
-  //   const { content, authorName, authorImage, createdAt } = comment;
 
+type CommentWithUser = Prisma.CommentGetPayload<{
+  include: { user: true };
+}>;
+
+const CommentCard = ({ comment }: { comment: CommentWithUser }) => {
   return (
     <div className="flex gap-3">
       <Avatar className="h-8 w-8">
-        <AvatarImage src="https://github.com/shadcn.png" alt={"user"} />
-        <AvatarFallback>{"U"}</AvatarFallback>
+        <AvatarImage
+          src={comment?.user?.imageUrl || "https://github.com/shadcn.png"}
+          alt={comment?.user?.name || "user"}
+        />
+        <AvatarFallback>{comment?.user?.name?.charAt(0) || "U"}</AvatarFallback>
       </Avatar>
 
       <div className="flex-1 space-y-1">
         <div className="flex items-center gap-2 text-sm">
-          <span className="font-medium capitalize">peter parker</span>
-          <span className="text-muted-foreground text-xs">2h ago</span>
+          <span className="font-medium capitalize">{comment?.user?.name}</span>
+          <span className="text-muted-foreground text-xs">
+            {new Date(comment.createdAt).toLocaleString()}
+          </span>
         </div>
 
-        <p className="text-sm leading-relaxed">amazing project</p>
+        <p className="text-sm leading-relaxed">{comment.comment}</p>
 
         <div className="flex items-center gap-2 pt-1">
           <Button

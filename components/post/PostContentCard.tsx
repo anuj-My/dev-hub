@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,7 +8,7 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Post } from "@/lib/generated/prisma/client";
-import PostActions from "../comment/PostActions";
+import PostActions from "./PostActions";
 
 type PostPropsType = {
   title?: string;
@@ -20,8 +19,7 @@ type PostPropsType = {
 };
 
 const PostContentCard = ({ post }: { post: Post }) => {
-  const isLiked = false;
-  const { title, imageUrl, postContent, authorName, authorImage } = post;
+  const { id, title, imageUrl, postContent, authorName, authorImage } = post;
   return (
     <Card className="w-full">
       <CardHeader className="space-y-6">
@@ -43,7 +41,7 @@ const PostContentCard = ({ post }: { post: Post }) => {
       </CardHeader>
       <CardContent className="text-lg">{postContent}</CardContent>
       <CardFooter className="flex-col w-full gap-4">
-        <PostActions />
+        <PostActions postId={id} />
       </CardFooter>
     </Card>
   );

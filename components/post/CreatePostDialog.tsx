@@ -25,9 +25,9 @@ const CreatePostDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="border p-4 mb-6 rounded-full cursor-text hover:bg-muted/50">
+        <button className="w-full text-left border p-4 mb-6 rounded-full cursor-text hover:bg-muted/50">
           <p className="text-muted-foreground">What are you building today?</p>
-        </div>
+        </button>
       </DialogTrigger>
 
       <DialogContent className="z-101 sm:max-w-2xl" showCloseButton={false}>

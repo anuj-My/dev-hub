@@ -35,7 +35,7 @@ const FormContainer = ({
       toast(state.message);
     }
 
-    if ((state.success, onSuccess)) {
+    if (state.success && onSuccess) {
       onSuccess();
     }
   }, [state]);

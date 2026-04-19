@@ -1,22 +1,25 @@
-import {
-  createCommentAction,
-  fetchCommentsAction,
-} from "@/actions/post-actions";
+import { createCommentAction } from "@/actions/post-actions";
 import FormContainer from "../form/FormContainer";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import SubmitButton from "../form/SubmitButton";
+import { UserResource } from "@clerk/nextjs/types";
 
-const CommentForm = ({ postId }: { postId: string }) => {
+const CommentForm = ({
+  postId,
+  user,
+}: {
+  postId: string;
+  user: UserResource | null | undefined;
+}) => {
   return (
     <div className="mb-6 space-y-4">
       <h3 className="text-lg font-semibold capitalize">Comments</h3>
 
       <div className="flex items-center gap-3">
         <Avatar className="h-8 w-8">
-          <AvatarImage src={"https://github.com/shadcn.png"} alt={"user"} />
-          <AvatarFallback>{"U"}</AvatarFallback>
+          <AvatarImage src={user?.imageUrl} alt={user?.fullName || "user"} />
+          <AvatarFallback>{user?.fullName?.charAt(0) || "U"}</AvatarFallback>
         </Avatar>
 
         <FormContainer

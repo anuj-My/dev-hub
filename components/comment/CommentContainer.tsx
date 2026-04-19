@@ -2,10 +2,10 @@
 import { fetchCommentsAction } from "@/actions/post-actions";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
-import SectionTitle from "../shared/SectionTitle";
 import { useEffect, useState } from "react";
 
 import { Prisma } from "@/lib/generated/prisma/client";
+import { useUser } from "@clerk/nextjs";
 
 type CommentWithUser = Prisma.CommentGetPayload<{
   include: { user: true };
@@ -13,6 +13,8 @@ type CommentWithUser = Prisma.CommentGetPayload<{
 
 const CommentContainer = ({ postId }: { postId: string }) => {
   const [comments, setComments] = useState<CommentWithUser[]>([]);
+
+  const { user } = useUser();
 
   useEffect(() => {
     const loadComments = async () => {
@@ -24,7 +26,7 @@ const CommentContainer = ({ postId }: { postId: string }) => {
 
   return (
     <div className="w-full">
-      <CommentForm postId={postId} />
+      <CommentForm postId={postId} user={user} />
 
       {comments.length === 0 ? (
         <h3 className="text-base font-semibold capitalize">No Comments yet.</h3>

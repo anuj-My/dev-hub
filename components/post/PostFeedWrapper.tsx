@@ -7,7 +7,7 @@ function FeedWrapper({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn("space-y-6", className)}>{children}</div>;
+  return <div className={cn("space-y-6 w-full mb-16", className)}>{children}</div>;
 }
 
 export default FeedWrapper;

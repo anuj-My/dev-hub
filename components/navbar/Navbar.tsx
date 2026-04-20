@@ -6,7 +6,7 @@ import UserIconDropdown from "./UserIconDropdown";
 
 const Navbar = async () => {
   return (
-    <div className="fixed top-0 left-0 w-full z-100 border-b bg-background/70 backdrop-blur">
+    <div className="sticky top-0 w-full z-50 border-b bg-background/70 backdrop-blur">
       <Container>
         <nav className="flex items-center justify-between py-3">
           <Link href="/" className="text-xl font-bold">

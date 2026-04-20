@@ -6,11 +6,13 @@ import AppSidebar from "@/components/sidebar/AppSidebar";
 const DashbaordLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
-      <Navbar />
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        <Container className="py-20">{children}</Container>
+      <main className="w-full flex-1 flex flex-col">
+        <Navbar />
+        <div className="p-4">
+          <SidebarTrigger className="-ml-1" size='icon-lg' />
+        </div>
+        <Container>{children}</Container>
       </main>
     </SidebarProvider>
   );

@@ -15,10 +15,16 @@ import { Separator } from "../ui/separator";
 import { toggleBookmarkAction } from "@/actions/post-actions";
 import { toast } from "sonner";
 
-const PostActions = ({ postId }: { postId: string }) => {
+const PostActions = ({
+  postId,
+  isBookmarked: initialIsBookmarked = false,
+}: {
+  postId: string;
+  isBookmarked?: boolean;
+}) => {
   const [isLiked, setIsLiked] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked);
 
   const [isPending, startTransition] = useTransition();
 
@@ -59,7 +65,7 @@ const PostActions = ({ postId }: { postId: string }) => {
         <Button
           variant="outline"
           size="icon-lg"
-          className="w-8 h-8 rounded-full"
+          className={`w-8 h-8 rounded-full ${isBookmarked && "border-primary"}`}
           onClick={toggleBookmark}
           disabled={isPending}
         >

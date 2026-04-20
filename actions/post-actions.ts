@@ -79,11 +79,18 @@ export const createPostAction = async (
 
 export const fetchAllPostAction = async () => {
   try {
-    await getAuthUser();
+    const user = await getAuthUser();
 
     const post = await db.post.findMany({
       orderBy: {
         createdAt: "desc",
+      },
+      include: {
+        bookmarks: {
+          where: {
+            userId: user.id,
+          },
+        },
       },
     });
     return post;
@@ -182,6 +189,66 @@ export const toggleBookmarkAction = async (postId: string) =>{
     })
     revalidatePath('/explore')
     return {message: 'Post added to bookmarks', success: true}
+  }catch(error){
+    return renderError(error)
+  }
+}
+
+export const fetchBookmarkedPostsAction = async () => {
+  try {
+    const user = await getAuthUser();
+
+    const bookmarks = await db.bookmark.findMany({
+      where: {
+        userId: user.id,
+      },
+      include: {
+        post: true,
+      },
+    });
+
+    return bookmarks;
+  } catch (error) {
+    return [];
+  }
+}
+
+export const togglePostLikeAction = async(postId: string) =>{
+  try{
+    const user = await getAuthUser()
+
+    await syncUser(user)
+
+    const existingLike = await db.like.findUnique({
+      where :{
+        userId_postId:{
+          userId: user.id,
+          postId
+        }
+      }
+    })
+
+    if(existingLike){
+      await db.like.delete({
+        where: {
+          userId_postId: {
+            userId: user.id,
+            postId
+          }
+        }
+      })
+      return {message: 'Post unliked', success: true}
+    }
+
+    await db.like.create({
+      data: {
+        userId: user.id,
+        postId
+      }
+    })
+    revalidatePath('/explore')
+    return {message: 'Post liked', success: true}
+
   }catch(error){
     return renderError(error)
   }

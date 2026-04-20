@@ -18,8 +18,10 @@ type PostPropsType = {
   authorName?: string;
 };
 
-const PostContentCard = ({ post }: { post: Post }) => {
-  const { id, title, imageUrl, postContent, authorName, authorImage } = post;
+const PostContentCard = ({ post }: { post: any }) => {
+  const { id, title, imageUrl, postContent, authorName, authorImage, bookmarks } = post;
+  const isBookmarked = bookmarks?.length > 0;
+
   return (
     <Card className="w-full">
       <CardHeader className="space-y-6">
@@ -41,7 +43,7 @@ const PostContentCard = ({ post }: { post: Post }) => {
       </CardHeader>
       <CardContent className="text-lg">{postContent}</CardContent>
       <CardFooter className="flex-col w-full gap-4">
-        <PostActions postId={id} />
+        <PostActions postId={id} isBookmarked={isBookmarked} />
       </CardFooter>
     </Card>
   );

@@ -8,9 +8,11 @@ import { UserResource } from "@clerk/nextjs/types";
 const CommentForm = ({
   postId,
   user,
+  onSuccess,
 }: {
   postId: string;
   user: UserResource | null | undefined;
+  onSuccess?: () => void;
 }) => {
   return (
     <div className="mb-6 space-y-4">
@@ -25,6 +27,7 @@ const CommentForm = ({
         <FormContainer
           action={createCommentAction}
           className="flex items-center w-full gap-2"
+          onSuccess={onSuccess}
         >
           <Input name="postId" type="hidden" value={postId} />
           <Input

@@ -2,6 +2,7 @@
 
 import {
   RiBookmarkLine,
+  RiChat1Fill,
   RiChat1Line,
   RiHeartFill,
   RiHeartLine,
@@ -9,6 +10,7 @@ import {
 import { useState } from "react";
 import { Button } from "../ui/button";
 import CommentContainer from "../comment/CommentContainer";
+import { Separator } from "../ui/separator";
 
 const PostActions = ({ postId }: { postId: string }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -23,7 +25,7 @@ const PostActions = ({ postId }: { postId: string }) => {
             className="w-8 h-8 rounded-full"
             onClick={() => setIsLiked(!isLiked)}
           >
-            {isLiked ? <RiHeartFill /> : <RiHeartLine />}
+            {isLiked ? <RiHeartFill className="bg-primary" /> : <RiHeartLine />}
           </Button>
           <Button
             variant="outline"
@@ -31,7 +33,9 @@ const PostActions = ({ postId }: { postId: string }) => {
             className="w-8 h-8 rounded-full"
             onClick={() => setShowComments(!showComments)}
           >
-            <RiChat1Line />
+            {
+              showComments ? <RiChat1Fill /> : <RiChat1Line />
+            }
           </Button>
         </div>
         <Button
@@ -42,6 +46,8 @@ const PostActions = ({ postId }: { postId: string }) => {
           <RiBookmarkLine />
         </Button>
       </div>
+
+     {showComments &&  <Separator className="my-2"/>}
 
       {showComments && <CommentContainer postId={postId} />}
     </>

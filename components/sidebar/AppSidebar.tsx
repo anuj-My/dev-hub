@@ -19,13 +19,15 @@ import {
   RiCompass3Line,
   RiUserLine,
   RiBookmarkLine,
+  RiHomeLine,
 } from "@remixicon/react";
 
 const navItems = [
+  { title: "Home", url: "/", icon: RiHomeLine },
   { title: "Explore", url: "/explore", icon: RiCompass3Line },
   { title: "Dashboard", url: "/dashboard", icon: RiDashboardLine },
   { title: "Profile", url: "/profile", icon: RiUserLine },
-  { title: "Saved", url: "/saved", icon: RiBookmarkLine },
+  { title: "Bookmarks", url: "/bookmarks", icon: RiBookmarkLine },
 ];
 
 export default function AppSidebar() {

@@ -3,7 +3,7 @@ import { SignUp } from "@clerk/nextjs";
 const SignUpPage = () => {
   return (
     <>
-      <SignUp forceRedirectUrl="/dashboard" />
+      <SignUp forceRedirectUrl="/explore" />
     </>
   );
 };

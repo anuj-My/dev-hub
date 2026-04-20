@@ -69,7 +69,7 @@ export const createPostAction = async (
       },
     });
 
-    revalidatePath("/dashboard");
+    revalidatePath("/explore");
 
     return { message: "Post created successfully.", success: true };
   } catch (error) {
@@ -119,7 +119,7 @@ export const createCommentAction = async (
       },
     });
 
-    revalidatePath("/dashboard");
+    revalidatePath("/explore");
 
     return { message: "Comment added successfully", success: true };
   } catch (error) {
@@ -146,3 +146,43 @@ export const fetchCommentsAction = async (postId: string) => {
     return [];
   }
 };
+
+
+export const toggleBookmarkAction = async (postId: string) =>{
+  try{
+    const user = await getAuthUser();
+    await syncUser(user);
+
+    const existingBookmark = await db.bookmark.findUnique({
+      where: {
+        userId_postId: {
+          userId: user.id,
+          postId
+        }
+      }
+    })
+
+    if(existingBookmark){
+      await db.bookmark.delete({
+        where: {
+          userId_postId:{
+            userId: user.id,
+            postId
+          }
+        }
+      })
+      return {message: 'Post removed from bookmarks', success: true}
+    }
+
+    await db.bookmark.create({
+      data: {
+        userId: user.id,
+        postId
+      }
+    })
+    revalidatePath('/explore')
+    return {message: 'Post added to bookmarks', success: true}
+  }catch(error){
+    return renderError(error)
+  }
+}

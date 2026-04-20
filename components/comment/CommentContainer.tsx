@@ -2,33 +2,24 @@
 import { fetchCommentsAction } from "@/actions/post-actions";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
-import { useEffect, useState } from "react";
-
-import { Prisma } from "@/lib/generated/prisma/client";
 import { useUser } from "@clerk/nextjs";
-
-type CommentWithUser = Prisma.CommentGetPayload<{
-  include: { user: true };
-}>;
+import { useQuery } from "@tanstack/react-query";
+import CommentListSkeleton from "./CommentListSkeleton";
 
 const CommentContainer = ({ postId }: { postId: string }) => {
-  const [comments, setComments] = useState<CommentWithUser[]>([]);
 
   const { user } = useUser();
 
-  useEffect(() => {
-    const loadComments = async () => {
-      const data = await fetchCommentsAction(postId);
-      setComments(data || []);
-    };
-    loadComments();
-  }, [postId]);
+  const {data: comments, isLoading, refetch} = useQuery({
+    queryKey: ['comments', postId],
+    queryFn: () => fetchCommentsAction(postId)
+   })
 
   return (
     <div className="w-full">
-      <CommentForm postId={postId} user={user} />
+      <CommentForm postId={postId} user={user} onSuccess={() => refetch()} />
 
-      {comments.length === 0 ? (
+      {isLoading ? <CommentListSkeleton/> :!comments ||comments.length === 0 ? (
         <h3 className="text-base font-semibold capitalize">No Comments yet.</h3>
       ) : (
         <div className="space-y-6">

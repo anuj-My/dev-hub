@@ -23,6 +23,8 @@ export const metadata: Metadata = {
     "DevHub – A developer-focused platform to share ideas, code snippets, and connect with other developers.",
 };
 
+import QueryProvider from "@/components/providers/QueryProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,8 +44,10 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <ClerkProvider>
-          <Toaster />
-          {children}
+          <QueryProvider>
+            <Toaster />
+            {children}
+          </QueryProvider>
         </ClerkProvider>
       </body>
     </html>

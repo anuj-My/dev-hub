@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { RiUserLine } from "@remixicon/react";
+import { RiCompass3Line } from "@remixicon/react";
 import SignOutLink from "./SignOutLink";
 import Link from "next/link";
 
@@ -45,9 +45,9 @@ export default async function UserIconDropdown() {
       <DropdownMenuContent className="z-101">
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <RiUserLine />
-              Dashboard
+            <Link href="/explore" className="capitalize flex items-center gap-2">
+              <RiCompass3Line />
+              Explore
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

@@ -220,7 +220,7 @@ export const togglePostLikeAction = async(postId: string) =>{
     await syncUser(user)
 
     const existingLike = await db.like.findUnique({
-      where :{
+      where: {
         userId_postId:{
           userId: user.id,
           postId

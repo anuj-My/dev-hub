@@ -12,7 +12,7 @@ import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
 import CommentContainer from "../comment/CommentContainer";
 import { Separator } from "../ui/separator";
-import { toggleBookmarkAction } from "@/actions/post-actions";
+import { toggleBookmarkAction, togglePostLikeAction } from "@/actions/post-actions";
 import { toast } from "sonner";
 
 const PostActions = ({
@@ -41,6 +41,18 @@ const PostActions = ({
     });
   };
 
+  const toggleLike = () =>{
+    setIsLiked(!isLiked)
+    startTransition(async () =>{
+      const res = await togglePostLikeAction(postId);
+      toast(res.message);
+
+      if(!res.success){
+        setIsLiked(!isLiked)
+      }
+    })
+  }
+
   return (
     <>
       <div className="flex items-center justify-between w-full">
@@ -48,15 +60,16 @@ const PostActions = ({
           <Button
             variant="outline"
             size="icon-lg"
-            className="w-8 h-8 rounded-full"
-            onClick={() => setIsLiked(!isLiked)}
+          className={`w-8 h-8 rounded-full ${isLiked && "border-primary"}`}
+            onClick={toggleLike}
+            disabled={isPending}
           >
             {isLiked ? <RiHeartFill className="text-primary" /> : <RiHeartLine />}
           </Button>
           <Button
             variant="outline"
             size="icon-lg"
-            className="w-8 h-8 rounded-full"
+          className={`w-8 h-8 rounded-full ${showComments && "border-primary"}`}
             onClick={() => setShowComments(!showComments)}
           >
             {showComments ? <RiChat1Fill className="text-primary"  /> : <RiChat1Line />}

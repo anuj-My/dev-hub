@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -41,7 +42,20 @@ const PostContentCard = ({ post }: { post: any }) => {
 
         <CardTitle className="text-xl">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="text-lg">{postContent}</CardContent>
+      <CardContent className="text-lg">
+        <p className="whitespace-pre-wrap">{postContent}</p>
+        {imageUrl && (
+          <div className="relative w-full mt-4 rounded-xl overflow-hidden border bg-muted/30 max-h-[500px] flex items-center justify-center">
+            <Image
+              src={imageUrl}
+              alt="Post image"
+              width={800}
+              height={600}
+              className="w-auto h-auto max-w-full max-h-[500px] object-contain"
+            />
+          </div>
+        )}
+      </CardContent>
       <CardFooter className="flex-col w-full gap-4">
         <PostActions postId={id} isBookmarked={isBookmarked} isLiked={isLiked} />
       </CardFooter>

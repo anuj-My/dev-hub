@@ -51,6 +51,7 @@ const PostContentCard = ({ post }: { post: any }) => {
               alt="Post image"
               width={800}
               height={600}
+              priority={true}
               className="w-auto h-auto max-w-full max-h-[500px] object-cover"
             />
           </div>

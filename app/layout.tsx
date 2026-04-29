@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 import QueryProvider from "@/components/providers/QueryProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
@@ -44,10 +46,17 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <ClerkProvider>
-          <QueryProvider>
-            <Toaster />
-            {children}
-          </QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <QueryProvider>
+              <Toaster />
+              {children}
+            </QueryProvider>
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>

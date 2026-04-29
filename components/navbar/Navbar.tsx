@@ -3,6 +3,7 @@ import Container from "../global/Container";
 import AuthButtons from "../shared/auth-buttons";
 import { Show } from "@clerk/nextjs";
 import UserIconDropdown from "./UserIconDropdown";
+import { ThemeToggle } from "../shared/ThemeToggle";
 
 const Navbar = async () => {
   return (
@@ -13,13 +14,16 @@ const Navbar = async () => {
             Dev<span className="text-primary">Hub</span>
           </Link>
 
-          <Show when="signed-in">
-            <UserIconDropdown />
-          </Show>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Show when="signed-in">
+              <UserIconDropdown />
+            </Show>
 
-          <Show when="signed-out">
-            <AuthButtons />
-          </Show>
+            <Show when="signed-out">
+              <AuthButtons />
+            </Show>
+          </div>
         </nav>
       </Container>
     </div>

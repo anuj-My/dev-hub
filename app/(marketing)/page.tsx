@@ -1,20 +1,16 @@
-import AuthButtons from "@/components/shared/auth-buttons";
+import HeroSection from "@/components/marketing/HeroSection";
+import CodeWindow from "@/components/marketing/CodeWindow";
+import FeaturesGrid from "@/components/marketing/FeaturesGrid";
+import Footer from "@/components/marketing/Footer";
 
 const Homepage = () => {
   return (
-    <section className="max-w-xl mx-auto min-h-[60vh] text-center flex items-center justify-center flex-col">
-      <div className="mb-10">
-        <h1 className="text-4xl mb-4 font-bold text-primary">
-          Share what you're building with the dev world
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          DevHub is a platform for developers to share ideas, code snippets, and
-          connect with others.
-        </p>
-      </div>
-
-      <AuthButtons centered={true} />
-    </section>
+    <div className="flex flex-col items-center w-full">
+      <HeroSection />
+      <CodeWindow />
+      <FeaturesGrid />
+      <Footer />
+    </div>
   );
 };
 

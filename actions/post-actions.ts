@@ -4,6 +4,7 @@ import { currentUser, User } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { FormState } from "@/components/form/FormContainer";
+import { supabase } from "@/lib/supabase";
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -38,7 +39,7 @@ export const createPostAction = async (
 ): Promise<FormState> => {
   try {
     const postContent = formData.get("postContent") as string;
-    const imageUrl = formData.get("imageUrl") as string;
+    const imageFile = formData.get("imageUrl") as File | null;
     const title = formData.get("title") as string;
 
     if (!postContent || postContent.trim() === "") {
@@ -46,6 +47,24 @@ export const createPostAction = async (
         message: "Post content is required",
         success: false,
       };
+    }
+
+    let imageUrl = "";
+    if (imageFile && imageFile.size > 0) {
+      const fileName = `${Date.now()}-${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+      const { data, error } = await supabase.storage
+        .from("dev-hub-bucket")
+        .upload(`posts/${fileName}`, imageFile);
+
+      if (error) {
+        throw new Error(`Failed to upload image: ${error.message}`);
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("dev-hub-bucket")
+        .getPublicUrl(`posts/${fileName}`);
+        
+      imageUrl = publicUrlData.publicUrl;
     }
 
     const user = await currentUser();
@@ -63,7 +82,7 @@ export const createPostAction = async (
         postContent: postContent,
         userId: user.id,
         title: title,
-        // imageUrl: '',
+        imageUrl: imageUrl !== "" ? imageUrl : null,
         authorName: user.fullName || "Anonymous",
         authorImage: user.imageUrl || "",
       },
@@ -87,6 +106,11 @@ export const fetchAllPostAction = async () => {
       },
       include: {
         bookmarks: {
+          where: {
+            userId: user.id,
+          },
+        },
+        likes: {
           where: {
             userId: user.id,
           },
@@ -253,3 +277,42 @@ export const togglePostLikeAction = async(postId: string) =>{
     return renderError(error)
   }
 }
+
+export const fetchUserStatsAction = async () => {
+  try {
+    const user = await getAuthUser();
+
+    const [postCount, likeCount, bookmarkCount] = await Promise.all([
+      db.post.count({ where: { userId: user.id } }),
+      db.like.count({ where: { userId: user.id } }),
+      db.bookmark.count({ where: { userId: user.id } }),
+    ]);
+
+    return { postCount, likeCount, bookmarkCount };
+  } catch (error) {
+    return { postCount: 0, likeCount: 0, bookmarkCount: 0 };
+  }
+};
+
+export const fetchUserPostsAction = async () => {
+  try {
+    const user = await getAuthUser();
+
+    const posts = await db.post.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: "desc" },
+      include: {
+        bookmarks: {
+          where: { userId: user.id },
+        },
+        likes: {
+          where: { userId: user.id },
+        },
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    return [];
+  }
+};

@@ -18,11 +18,13 @@ import { toast } from "sonner";
 const PostActions = ({
   postId,
   isBookmarked: initialIsBookmarked = false,
+  isLiked: initialIsLiked = false,
 }: {
   postId: string;
   isBookmarked?: boolean;
+  isLiked?: boolean;
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [showComments, setShowComments] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked);
 
